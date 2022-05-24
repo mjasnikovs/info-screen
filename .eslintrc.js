@@ -1,5 +1,8 @@
 module.exports = {
 	extends: 'next/core-web-vitals',
+	env: {
+		es6: true
+	},
 	rules: {
 		indent: [2, 'tab'],
 		'no-tabs': 0,

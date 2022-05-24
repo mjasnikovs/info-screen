@@ -1,11 +1,12 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import Head from 'next/head'
-import {Button, Grid, Alert, Space, Image, Card, Container, Progress} from '@mantine/core'
+import {Alert, Space, Image, Container, Progress} from '@mantine/core'
 import {AlertCircle} from 'tabler-icons-react'
 
 const style = {padding: 0, margin: 0, overflow: 'hidden', backgroundColor: 'white', height: '100%', position: 'absolute', top: 0, left: 0}
 
 const imageTimeout = null
+const imageErrorTimeout = null
 
 const Index = () => {
 	const [error, setError] = useState(false)
@@ -13,7 +14,8 @@ const Index = () => {
 	const [image, setImage] = useState(null)
 	const [time, setTime] = useState(0)
 
-	const handleImageList = () => {
+	const handleImageList = useCallback(() => {
+		clearTimeout(imageErrorTimeout)
 		fetch('/api/list', {method: 'GET'})
 			.then(res => {
 				if (res.ok) {
@@ -23,6 +25,10 @@ const Index = () => {
 			})
 			.then(res => {
 				if (typeof res.error !== 'undefined') {
+					imageErrorTimeout = setTimeout(() => {
+						setError(null)
+						handleImageList()
+					}, 10000)
 					return setError(res.error)
 				}
 				setTime(0)
@@ -31,9 +37,13 @@ const Index = () => {
 				return setImages(res)
 			})
 			.catch(err => {
+				imageErrorTimeout = setTimeout(() => {
+					setError(null)
+					handleImageList()
+				}, 10000)
 				return setError(err.message)
 			})
-	}
+	}, [])
 
 	useEffect(() => {
 		clearTimeout(imageTimeout)
@@ -53,9 +63,9 @@ const Index = () => {
 		return () => {
 			clearTimeout(imageTimeout)
 		}
-	}, [images, time])
+	}, [images, time, handleImageList])
 
-	useEffect(handleImageList, [])
+	useEffect(handleImageList, [handleImageList])
 
 	return (
 		<Container fluid style={style}>
