@@ -2,7 +2,9 @@ FROM node:16.14.2-alpine
 
 RUN echo "ipv6" >> /etc/modules
 
-RUN apk add --update --no-cache git imagemagick && rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache git \
+	libreoffice=7.2.2.2-r2 imagemagick=7.1.0.16-r0 \
+	&& rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
 

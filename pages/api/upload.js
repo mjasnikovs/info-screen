@@ -15,7 +15,7 @@ export const config = {
 const generateWebp = () =>
 	new Promise(wepResolve => {
 		const generateWebpUrl = () => {
-			const webpName = `${new Date().getTime()}${Math.floor(Math.random() * 99999)}.webp`
+			const webpName = `${new Date().getTime()}${Math.floor(Math.random() * 99999)}-%04.webp`
 			const webpPath = path.resolve('public/cdn/', webpName)
 			return {webpName, webpPath}
 		}
