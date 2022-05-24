@@ -8,7 +8,7 @@ services:
         volumes:
             - ./public/cdn:/usr/src/app/public/cdn
         ports:
-            - '80:80'
-            - '81:81'
+            - '5000:80'
+            - '5001:81'
         env_file:
             - ./.env.production
