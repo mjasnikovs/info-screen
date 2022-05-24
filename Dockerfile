@@ -17,7 +17,7 @@ ADD https://api.github.com/repos/mjasnikovs/info-screen/git/refs/heads/main vers
 
 RUN git reset --hard
 RUN git pull origin main
-COPY .env.development .env.development
+COPY .env.production .env.production
 RUN npm run build
 
 EXPOSE 80 81
