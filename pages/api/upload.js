@@ -15,7 +15,7 @@ export const config = {
 const generateWebp = () =>
 	new Promise(wepResolve => {
 		const generateWebpUrl = () => {
-			const webpName = `${new Date().getTime()}${Math.floor(Math.random() * 99999)}-%04.webp`
+			const webpName = `${new Date().getTime()}${Math.floor(Math.random() * 99999)}-%04d.webp`
 			const webpPath = path.resolve('public/cdn/', webpName)
 			return {webpName, webpPath}
 		}
@@ -73,6 +73,7 @@ const handler = async (req, res) => {
 
 			const {filePath} = await generateTemp(filename)
 			fileSet.add(filePath)
+
 			const fstream = fs.createWriteStream(filePath)
 			file.pipe(fstream)
 
