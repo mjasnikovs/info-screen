@@ -1,0 +1,14 @@
+version: '2.0'
+
+services:
+    info-screen:
+        container_name: info-screen
+        build:
+            context: ./
+        volumes:
+            - ./public/cdn:/usr/src/app/public/cdn
+        ports:
+            - '80:80'
+            - '81:81'
+        env_file:
+            - ./.env.production
