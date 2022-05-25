@@ -6,6 +6,9 @@ RUN apk add --update --no-cache git \
 	libreoffice=7.2.2.2-r2 imagemagick=7.1.0.16-r0 \
 	&& rm -rf /var/cache/apk/*
 
+RUN apk add --no-cache msttcorefonts-installer fontconfig
+RUN update-ms-fonts
+
 WORKDIR /usr/src/app
 
 RUN git clone https://github.com/mjasnikovs/info-screen.git .
